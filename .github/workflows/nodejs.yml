@@ -1,0 +1,50 @@
+name: Node.js CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - master  # Trigger the pipeline on push to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger the pipeline on pull requests targeting the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Runs on the latest Ubuntu environment
+
+    steps:
+      # Step 1: Check out the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js (specify the version here)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # You can change this to your required Node.js version
+
+      # Step 3: Install dependencies (using npm or yarn)
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Run tests (optional, can be modified to match your test framework)
+      - name: Run tests
+        run: npm test
+
+      # Step 5: Build the app (optional, if you have a build step)
+      - name: Build app
+        run: npm run build
+
+      # Step 6: Upload test results (optional, if you are using a test reporting tool)
+      # Uncomment and configure this step if needed
+      # - name: Upload test results
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: test-results
+      #     path: test-results/
+
+      # Step 7: Optionally deploy the app (you can add deployment steps here)
+      # Uncomment and configure this step if you have deployment scripts
+      # - name: Deploy app
+      #   run: ./deploy.sh
+
